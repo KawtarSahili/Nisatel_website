@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import { useTranslation } from 'react-i18next';
 import LandingPage from './Pages/LandingPage';
 import ContactPage from './Pages/ContactPage';
 import Header from './components/Header';
@@ -12,8 +12,11 @@ import ServicesPage from './Pages/ServicesPage';
 import PylonesPage from './Pages/PylonesPage';
 import ApplicationsPage from './Pages/ApplicationsPage';
 import WirelessPage from './Pages/WirelessPage';
-import Chatbot from './components/Chatbot';
+import ChatbotFr from './components/ChatbotFr';
+import ChatbotEn from './components/ChatbotEn';
+import SolutionsTechniques from './Pages/SolutionsTechniques';
 function App() {
+  const { i18n } = useTranslation();
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
@@ -22,7 +25,7 @@ function App() {
     <Router>
       <div className="flex flex-col min-h-screen App overflow-hidden">
         <Header/>
-        <Chatbot />
+        {i18n.language === 'fr' ? <ChatbotFr /> : <ChatbotEn />}
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -32,6 +35,7 @@ function App() {
             <Route path="/pylônes" element={<PylonesPage />} />
             <Route path="/applications" element={<ApplicationsPage />} />
             <Route path="/wireless" element={<WirelessPage />} />
+            <Route path="/solutions-techniques" element={<SolutionsTechniques />} />
           </Routes>
         </main>
 

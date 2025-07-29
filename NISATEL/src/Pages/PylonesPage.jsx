@@ -1,263 +1,297 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import VideoPylone from '../assets/pylone.mp4';
+import autoportantsImage from '../assets/pylones-monotubes-2.jpg';
+import monotubesImage from '../assets/NISATEL-MAINTENANCE.webp';
+import speciauxImage from '../assets/Pylônes-spéciaux.png';
+import renforcementImage from '../assets/Pylones_treillis_autoportants.jpg';
 
 // Styled Components
 const ProductsPageContainer = styled.div`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  line-height: 1.6;
+  background: white;
+`;
+
+const HeroSection = styled.div`
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
   display: flex;
-  min-height: 100vh;
-  background: white;
-  @media (max-width: 900px) {
-    flex-direction: column;
-    padding-top: 80px;
-  }
+  align-items: center;
+  justify-content: center;
 `;
 
-const Sidebar = styled.div`
-  width: 390px;
-  background: white;
-  border-right: 1px solid #eee;
-  padding: 40px 0;
-  margin-top: 100px;
-  @media (max-width: 900px) {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #eee;
-    margin-top: 0;
-    padding: 0 0 10px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
+const VideoBackground = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 `;
 
-const SidebarTitle = styled.h3`
-  padding: 0 30px 20px;
-  margin-bottom: 20px;
-  font-size: 1.3rem;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-top: 50px;
-  padding-right: 50px;
-  @media (max-width: 900px) {
-    width: 100%;
-    padding: 10px 0 10px 0;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-    border-bottom: none;
-    text-align: center;
-    padding-right: 0;
-    padding-top: 10px;
-  }
+const HeroOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 `;
 
-const SidebarItem = styled(motion.div)`
-  padding: 20px 30px;
-  cursor: pointer;
-  font-weight: ${props => props.active ? '600' : '400'};
-  color: ${props => props.active ? '#f39c12' : '#333'};
-  border-left: 3px solid ${props => props.active ? '#f39c12' : 'transparent'};
-  transition: all 0.2s ease;
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 
-  &:hover {
-    color: #f39c12;
-  }
-  @media (max-width: 900px) {
-    border-left: none;
-    border-bottom: 3px solid ${props => props.active ? '#f39c12' : 'transparent'};
-    padding: 10px 16px;
-    font-size: 0.98rem;
-    border-radius: 8px 8px 0 0;
-    margin-bottom: 0;
-  }
-`;
-
-const MainContent = styled.div`
-  flex: 1;
-  padding: 60px 80px;
-  max-width: 900px;
-  @media (max-width: 900px) {
-    padding: 30px 10px 20px 10px;
-    max-width: 100%;
-  }
-`;
-
-const PageHeader = styled.h1`
-  font-size: 2.2rem;
-  color: #174ea6;
-  margin-bottom: 40px;
-  font-weight: 700;
-  padding-top: 90px;
-  @media (max-width: 900px) {
-    font-size: 1.4rem;
+  h1 {
+    font-size: 4rem;
     margin-bottom: 20px;
-    padding-top: 30px;
-    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
   }
+
+  p {
+    font-size: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px;
 `;
 
 const ProductSection = styled.section`
-  margin-bottom: 60px;
+  margin-bottom: 80px;
 `;
 
-const ProductTitle = styled.h2`
-  font-size: 1.6rem;
-  color: #174ea6;
-  margin-bottom: 25px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #174ea6;
-  display: inline-block;
+const ProductContent = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
-const FeatureList = styled.ul`
-  margin: 25px 0;
-  padding-left: 20px;
+const ProductText = styled.div`
+  flex: 1;
+  min-width: 300px;
+
+  h3 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background-color: #f39c12;
+      bottom: -10px;
+      left: 0;
+    }
+  }
+
+  ul {
+    margin-bottom: 30px;
+  }
+
+  li {
+    margin-bottom: 12px;
+    color: #555;
+    position: relative;
+    padding-left: 25px;
+    font-size: 1.05rem;
+
+    &:before {
+      content: '•';
+      color: #3498db;
+      font-size: 1.8rem;
+      position: absolute;
+      left: 0;
+      top: -7px;
+    }
+  }
 `;
 
-const FeatureItem = styled.li`
-  margin-bottom: 12px;
-  color: #333;
-  font-size: 1.05rem;
-  line-height: 1.6;
+const ProductImageContainer = styled.div`
+  flex: 1;
+  min-width: 300px;
   position: relative;
-  padding-left: 25px;
-
-  &:before {
-    content: '•';
-    color: #f39c12;
-    font-size: 1.5rem;
-    position: absolute;
-    left: 0;
-    top: -5px;
+  width: 550px;
+  height: 550px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  border: 4px solid #3498db;
+  margin: 0 auto;
+  
+  &:hover {
+    border-color: #f39c12;
+    transition: border-color 0.3s ease;
   }
 `;
 
 const ProductImage = styled.div`
   width: 100%;
-  height: 500px;
+  height: 100%;
   background-image: url(${props => props.image});
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
-  margin: 30px 0;
-  border: 1px solid #eee;
-  @media (max-width: 900px) {
-    height: 380px;
-    margin: 16px 0;
-    background-size: contain;
+  transition: transform 0.5s ease;
+
+  ${ProductImageContainer}:hover & {
+    transform: scale(1.1);
   }
 `;
 
-// Bouton Lire la suite supprimé
+const ProductButton = styled(motion.button)`
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+
+  i {
+    margin-left: 8px;
+  }
+`;
 
 // Main Component
-const ProductsPage = () => {
-  const [activeCategory, setActiveCategory] = useState('autoportants');
+const PylonesPage = () => {
+  const { t } = useTranslation();
 
   const productCategories = [
     {
       id: 'autoportants',
-      name: 'Pylônes Treillis Autoportants',
-      image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      features: [
-        'Accès par échelle intérieure/extérieure ou nacelle',
-        'Silhouette constante ou à fruit',
-        'Habillage sur demande',
-        'Mise en peinture personnalisée',
-        'Plateformes de travail et paliers de repos',
-        'Système anti-chute de type rail ou câble',
-        'Système anti intrusion',
-        'Balisage diurne, nocturne, lumineux',
-        'Supports d\'antennes',
-        'Mise à la terre et système paratonnerre'
-      ]
+      name: t('productsPage.products.autoportants.title'),
+      image: renforcementImage,
+      features: t('productsPage.products.autoportants.features', { returnObjects: true })
     },
     {
       id: 'monotubes',
-      name: 'Pylônes Monotubes',
-      image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      features: [
-        'Accès par échelle intérieure/extérieure ou nacelle',
-        'Radôme en fibre optionnel',
-        'Cache publicitaire intégré',
-        'Mise en peinture personnalisée',
-        'Plateformes de travail et paliers de repos',
-        'Système anti-chute de type rail ou câble',
-        'Système anti intrusion',
-        'Balisage diurne, nocturne, lumineux',
-        'Supports d\'antennes',
-        'Mise à la terre et système paratonnerre'
-      ]
+      name: t('productsPage.products.monotubes.title'),
+      image: autoportantsImage,
+      features: t('productsPage.products.monotubes.features', { returnObjects: true })
     },
     {
       id: 'speciaux',
-      name: 'Pylônes Spéciaux',
-      image: 'https://images.unsplash.com/photo-1581093057305-5e0d6a7cd5c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      features: [
-        'Pylône provisoire pour chantiers',
-        'Pylône sur châssis mobile',
-        'Pylône haubané pour grandes hauteurs',
-        'Mât rabattable pour zones sensibles',
-        'Solutions sur mesure selon besoins spécifiques'
-      ]
+      name: t('productsPage.products.speciaux.title'),
+      image: speciauxImage,
+      features: t('productsPage.products.speciaux.features', { returnObjects: true })
     },
     {
       id: 'renforcement',
-      name: 'Renforcement de Pylônes',
-      image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      features: [
-        'Renforcement de massifs par surépaisseur',
-        'Élargissement des fondations existantes',
-        'Micropieux pour consolidation',
-        'Ceinturage structurel',
-        'Remplacement d\'éléments existants',
-        'Juppage extérieur pour renforcement'
-      ]
+      name: t('productsPage.products.renforcement.title'),
+      image: monotubesImage,
+      features: t('productsPage.products.renforcement.features', { returnObjects: true })
     }
   ];
 
-  const currentCategory = productCategories.find(cat => cat.id === activeCategory);
-
   return (
     <ProductsPageContainer>
-      <Sidebar>
-      
-        {productCategories.map((category) => (
-          <SidebarItem
-            key={category.id}
-            active={activeCategory === category.id}
-            onClick={() => setActiveCategory(category.id)}
-          >
-            {category.name}
-          </SidebarItem>
-        ))}
-      </Sidebar>
+      <HeroSection>
+        <VideoBackground autoPlay loop muted playsInline>
+          <source src={VideoPylone} type="video/mp4" />
+        </VideoBackground>
+        <HeroOverlay />
+        <HeroContent>
+          <h1>{t('productsPage.hero.title')}</h1>
+          <p>{t('productsPage.hero.subtitle')}</p>
+        </HeroContent>
+      </HeroSection>
 
-      <MainContent>
-        <PageHeader>Nos Pylônes</PageHeader>
-
-        {currentCategory && (
-          <ProductSection>
-            <ProductTitle>{currentCategory.name}</ProductTitle>
-            
-            <FeatureList>
-              {currentCategory.features.map((feature, index) => (
-                <FeatureItem key={index}>
-                  {feature}
-                </FeatureItem>
-              ))}
-            </FeatureList>
-
-            <ProductImage image={currentCategory.image} />
-
+      <Container>
+        {productCategories.map((product, index) => (
+          <ProductSection key={product.id}>
+            <ProductContent>
+              {index % 2 === 0 ? (
+                <>
+                  <ProductText>
+                    <h3>{product.name}</h3>
+                    <ul>
+                      {product.features.map((feature, i) => (
+                        <li key={i}>{feature}</li>
+                      ))}
+                    </ul>
+                    <ProductButton
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right"></i>
+                    </ProductButton>
+                  </ProductText>
+                  <ProductImageContainer>
+                    <ProductImage image={product.image} />
+                  </ProductImageContainer>
+                </>
+              ) : (
+                <>
+                  <ProductImageContainer>
+                    <ProductImage image={product.image} />
+                  </ProductImageContainer>
+                  <ProductText>
+                    <h3>{product.name}</h3>
+                    <ul>
+                      {product.features.map((feature, i) => (
+                        <li key={i}>{feature}</li>
+                      ))}
+                    </ul>
+                    <ProductButton
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right"></i>
+                    </ProductButton>
+                  </ProductText>
+                </>
+              )}
+            </ProductContent>
           </ProductSection>
-        )}
-      </MainContent>
+        ))}
+      </Container>
     </ProductsPageContainer>
   );
 };
 
-export default ProductsPage;
+export default PylonesPage;

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import logo from '../assets/LogoNisatel.jpg';
@@ -11,6 +12,15 @@ import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper/modules';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+  }, []);
+
   return (
     <footer className="pt-12 pb-6 text-white bg-gray-900">
       <div className="container px-4 mx-auto">
@@ -26,12 +36,12 @@ const Footer = () => {
                 className="w-12 h-12 p-1 mr-3 bg-white border-2 border-blue-400 rounded-full"
               />
               <div className="pl-2 border-l-2 border-blue-400">
-                <div className="text-xl font-bold text-orange-400">NISATEL</div>
-                <div className="text-xs text-gray-400">Réseaux Télécom et Energie</div>
+                <div className="text-xl font-bold text-orange-400">{t('footer.company.name')}</div>
+                <div className="text-xs text-gray-400">{t('footer.company.slogan')}</div>
               </div>
             </div>
             <p className="mb-4 text-sm text-gray-300">
-              Entreprise marocaine spécialisée dans le développement, la fabrication et l'installation de pylônes et infrastructures de télécommunication.
+              {t('footer.company.description')}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 transition hover:text-blue-400">
@@ -48,90 +58,73 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="mb-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 className="pb-2 mb-4 text-lg font-semibold text-blue-400 border-b border-blue-400">LIENS RAPIDES</h3>
+            <h3 className="pb-2 mb-4 text-lg font-semibold text-blue-400 border-b border-blue-400">
+              {t('footer.sections.quickLinks')}
+            </h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Accueil</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Notre Entreprise</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Services</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Produits</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Applications</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Contact</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.links.home')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.links.about')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.links.services')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.links.products')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.links.applications')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.links.contact')}</a></li>
             </ul>
           </div>
 
           {/* Services */}
           <div className="mb-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 className="pb-2 mb-4 text-lg font-semibold text-blue-400 border-b border-blue-400">SERVICES</h3>
+            <h3 className="pb-2 mb-4 text-lg font-semibold text-blue-400 border-b border-blue-400">
+              {t('footer.sections.services')}
+            </h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Bureau d'études</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Fabrication</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Montage sur site</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Maintenance</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">WiFi Pro</a></li>
-              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">Fibre Optique</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.servicesList.engineering')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.servicesList.manufacturing')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.servicesList.installation')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.servicesList.maintenance')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.servicesList.wifi')}</a></li>
+              <li><a href="#" className="text-sm text-gray-300 transition hover:text-blue-400">{t('footer.servicesList.fiber')}</a></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div className="mb-6" data-aos="fade-up" data-aos-delay="300">
-            <h3 className="pb-2 mb-4 text-lg font-semibold text-blue-400 border-b border-blue-400">CONTACT</h3>
+            <h3 className="pb-2 mb-4 text-lg font-semibold text-blue-400 border-b border-blue-400">
+              {t('footer.sections.contact')}
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <FaPhone className="flex-shrink-0 mt-1 mr-2 text-blue-400" />
-                <span className="text-sm text-gray-300">+212 537 410 257</span>
+                <span className="text-sm text-gray-300">{t('footer.contactInfo.phone')}</span>
               </li>
               <li className="flex items-start">
                 <FaFax className="flex-shrink-0 mt-1 mr-2 text-blue-400" />
-                <span className="text-sm text-gray-300">+212 537 410 226</span>
+                <span className="text-sm text-gray-300">{t('footer.contactInfo.fax')}</span>
               </li>
               <li className="flex items-start">
                 <FaEnvelope className="flex-shrink-0 mt-1 mr-2 text-blue-400" />
-                <a href="mailto:contact@nisatel.ma" className="text-sm text-gray-300 transition hover:text-blue-400">contact@nisatel.ma</a>
+                <a href={`mailto:${t('footer.contactInfo.email')}`} className="text-sm text-gray-300 transition hover:text-blue-400">
+                  {t('footer.contactInfo.email')}
+                </a>
               </li>
               <li className="flex items-start">
                 <FaGlobe className="flex-shrink-0 mt-1 mr-2 text-blue-400" />
-                <a href="https://www.nisatel.ma" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-300 transition hover:text-blue-400">www.nisatel.ma</a>
+                <a href={`https://${t('footer.contactInfo.website')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-300 transition hover:text-blue-400">
+                  {t('footer.contactInfo.website')}
+                </a>
               </li>
               <li className="flex items-start">
                 <FaMapMarkerAlt className="flex-shrink-0 mt-1 mr-2 text-blue-400" />
-                <span className="text-sm text-gray-300">06, Résidence Kader, Mers El Kheir, Témara</span>
+                <span className="text-sm text-gray-300">{t('footer.contactInfo.address')}</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* NOS VALEURS - Swiper slider */}
-        <div className="p-6 mb-8 bg-gray-800 rounded-lg" data-aos="fade-up">
-          <h3 className="mb-4 text-lg font-semibold text-center text-blue-400">NOS VALEURS</h3>
-          <Swiper
-            modules={[Autoplay]}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
-            spaceBetween={20}
-            slidesPerView={1}
-            loop
-          >
-            <SwiperSlide>
-              <div className="p-4 bg-gray-700 rounded-lg">
-                <p className="text-sm italic text-gray-300">
-                  "Nous entreprenons chaque jour pour construire les réseaux de demain et créer un monde de progrès durable..."
-                </p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="p-4 bg-gray-700 rounded-lg">
-                <p className="text-sm italic text-gray-300">
-                  "Nous apprenons avec humilité les uns des autres pour donner le meilleur de nous-même."
-                </p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="p-4 bg-gray-700 rounded-lg">
-                <p className="text-sm italic text-gray-300">
-                  "La satisfaction de nos clients est notre fierté."
-                </p>
-              </div>
-            </SwiperSlide>
-          </Swiper>
+       
+
+        {/* Copyright */}
+        <div className="pt-6 mt-6 text-sm text-center text-gray-500 border-t border-gray-800">
+          <p>&copy; {new Date().getFullYear()} {t('footer.company.name')}. {t('footer.copyright')}</p>
         </div>
       </div>
     </footer>
