@@ -15,6 +15,8 @@ import WirelessPage from './Pages/WirelessPage';
 import ChatbotFr from './components/ChatbotFr';
 import ChatbotEn from './components/ChatbotEn';
 import SolutionsTechniques from './Pages/SolutionsTechniques';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 function App() {
   const { i18n } = useTranslation();
   useEffect(() => {
@@ -23,7 +25,7 @@ function App() {
 
   return (
     <Router>
-      <div className="flex flex-col min-h-screen App overflow-hidden">
+      <div className="flex flex-col min-h-screen overflow-hidden App">
         <Header/>
         {i18n.language === 'fr' ? <ChatbotFr /> : <ChatbotEn />}
         <main className="flex-grow">

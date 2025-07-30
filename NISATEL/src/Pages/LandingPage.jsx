@@ -18,6 +18,8 @@ import pylone from '../assets/1536773861660_page-0001.jpg'
 import treillis from '../assets/Pylônes-treillis-autoportants.jpg'
 import Wifi from '../assets/enterprise-wireless-network.jpg'
 import energie from '../assets/energie.jpg'
+import { Link } from 'react-router-dom';
+
 import { 
   FaDraftingCompass, 
   FaIndustry, 
@@ -27,6 +29,12 @@ import {
   FaBroadcastTower,
   FaTruckMonster
 } from 'react-icons/fa';
+
+const slideLinks = [
+  '/pylônes',      // Slide 0
+  '/wireless', // Slide 1
+  '/services',   // Slide 2
+];
 
 const LandingPage = () => {
   const [activeTab, setActiveTab] = useState('pylones');
@@ -117,14 +125,17 @@ const LandingPage = () => {
                 <motion.p className="mb-8 text-xl drop-shadow-sm" variants={itemVariants}>
                   {t(`landingPage.hero.slides.${index}.subtitle`)}
                 </motion.p>
-                <motion.button 
-                  className="px-8 py-3 text-lg font-semibold tracking-wider text-white uppercase transition-all duration-300 bg-blue-900 rounded-full shadow-md hover:bg-blue-800"
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {t(`landingPage.hero.slides.${index}.button`)}
-                </motion.button>
+                <Link to={slideLinks[index]}>
+  <motion.button 
+    className="px-8 py-3 text-lg font-semibold tracking-wider text-white uppercase transition-all duration-300 bg-blue-900 rounded-full shadow-md hover:bg-blue-800"
+    variants={itemVariants}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    {t(`landingPage.hero.slides.${index}.button`)}
+  </motion.button>
+</Link>
+
               </div>
             </div>
           ))}
@@ -148,13 +159,7 @@ const LandingPage = () => {
             <p className="mb-6 leading-relaxed text-gray-700">
               {t('landingPage.about.description2')}
             </p>
-            <motion.button
-              className="px-8 py-3 font-semibold tracking-wider text-white uppercase transition-all duration-300 bg-blue-900 rounded-full shadow-md hover:bg-blue-800"
-              whileHover={{ scale: 1.05, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {t('landingPage.about.button')}
-            </motion.button>
+            
           </motion.div>
           
           <motion.div 
@@ -249,6 +254,7 @@ const LandingPage = () => {
                 <p className="mb-6 leading-relaxed text-gray-700">
                   {service.description}
                 </p>
+                <Link to="/services">
                 <motion.button
                   className="px-6 py-2 text-sm font-semibold text-white transition-all duration-300 bg-blue-900 rounded-full hover:bg-blue-800"
                   whileHover={{ scale: 1.05 }}
@@ -256,6 +262,7 @@ const LandingPage = () => {
                 >
                   {service.button}
                 </motion.button>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -310,6 +317,7 @@ const LandingPage = () => {
                           </li>
                         ))}
                       </ul>
+                      <Link to="/pylônes">
                       <motion.button
                         className="px-8 py-3 font-semibold text-white transition-all duration-300 bg-blue-900 rounded-full hover:bg-blue-800"
                         whileHover={{ scale: 1.05 }}
@@ -317,6 +325,7 @@ const LandingPage = () => {
                       >
                         {t(`landingPage.products.items.${activeTab}.button`)}
                       </motion.button>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

@@ -2,29 +2,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+// Assets
 import VideoPylone from '../assets/pylone.mp4';
 import autoportantsImage from '../assets/pylones-monotubes-2.jpg';
 import monotubesImage from '../assets/NISATEL-MAINTENANCE.webp';
 import speciauxImage from '../assets/Pylônes-spéciaux.png';
 import renforcementImage from '../assets/Pylones_treillis_autoportants.jpg';
 
-// Styled Components
-const ProductsPageContainer = styled.div`
+const PageContainer = styled.div`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
   color: #333;
-  line-height: 1.6;
-  background: white;
 `;
 
-const HeroSection = styled.div`
+const HeroSection = styled.section`
   position: relative;
   width: 100%;
   height: 70vh;
-  min-height: 500px;
-  overflow: hidden;
+  min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: 50vh;
+  }
 `;
 
 const VideoBackground = styled.video`
@@ -37,13 +42,13 @@ const VideoBackground = styled.video`
   z-index: 1;
 `;
 
-const HeroOverlay = styled.div`
+const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 `;
 
@@ -53,47 +58,34 @@ const HeroContent = styled.div`
   text-align: center;
   color: white;
   padding: 0 20px;
-  max-width: 1200px;
-  margin: 0 auto;
 
   h1 {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    
+    font-size: 2.8rem;
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
   }
 
   p {
-    font-size: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto 30px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    
+    font-size: 1.2rem;
     @media (max-width: 768px) {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
   }
 `;
 
-const Container = styled.div`
+const Section = styled.section`
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 80px 20px;
+  margin: auto;
+  padding: 60px 20px;
 `;
 
-const ProductSection = styled.section`
-  margin-bottom: 80px;
-`;
-
-const ProductContent = styled.div`
+const ProductBlock = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 40px;
-  margin-top: 40px;
+  gap: 30px;
+  margin-bottom: 60px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -102,102 +94,102 @@ const ProductContent = styled.div`
 
 const ProductText = styled.div`
   flex: 1;
-  min-width: 300px;
+  min-width: 280px;
 
   h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #2c3e50;
     margin-bottom: 20px;
     position: relative;
-    display: inline-block;
 
-    &:after {
+    &::after {
       content: '';
-      position: absolute;
       width: 50px;
       height: 3px;
-      background-color: #f39c12;
+      background: #f39c12;
+      position: absolute;
       bottom: -10px;
       left: 0;
     }
   }
 
   ul {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    padding-left: 20px;
   }
 
   li {
-    margin-bottom: 12px;
-    color: #555;
     position: relative;
     padding-left: 25px;
-    font-size: 1.05rem;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #555;
 
-    &:before {
+    &::before {
       content: '•';
-      color: #3498db;
-      font-size: 1.8rem;
       position: absolute;
       left: 0;
-      top: -7px;
+      top: -3px;
+      color: #3498db;
+      font-size: 1.5rem;
     }
   }
 `;
 
-const ProductImageContainer = styled.div`
-  flex: 1;
-  min-width: 300px;
-  position: relative;
-  width: 550px;
-  height: 550px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-  border: 4px solid #3498db;
-  margin: 0 auto;
-  
-  &:hover {
-    border-color: #f39c12;
-    transition: border-color 0.3s ease;
-  }
-`;
-
 const ProductImage = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${props => props.image});
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.5s ease;
+  flex: 1;
+  min-width: 280px;
+  text-align: center;
 
-  ${ProductImageContainer}:hover & {
-    transform: scale(1.1);
+  img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+    border: 4px solid #3498db;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: #f39c12;
+    }
   }
 `;
 
-const ProductButton = styled(motion.button)`
-  background-color: #3498db;
+const CTAButton = styled(motion.button)`
+  background: #3498db;
   color: white;
   border: none;
-  padding: 12px 30px;
+  padding: 12px 24px;
   font-size: 1rem;
+  font-weight: bold;
   border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
 
   &:hover {
-    background-color: #2980b9;
+    background: #2980b9;
   }
 
   i {
-    margin-left: 8px;
+    margin-left: 10px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
   }
 `;
 
-// Main Component
 const PylonesPage = () => {
   const { t } = useTranslation();
 
@@ -206,91 +198,93 @@ const PylonesPage = () => {
       id: 'autoportants',
       name: t('productsPage.products.autoportants.title'),
       image: renforcementImage,
-      features: t('productsPage.products.autoportants.features', { returnObjects: true })
+      features: t('productsPage.products.autoportants.features', { returnObjects: true }),
     },
     {
       id: 'monotubes',
       name: t('productsPage.products.monotubes.title'),
       image: autoportantsImage,
-      features: t('productsPage.products.monotubes.features', { returnObjects: true })
+      features: t('productsPage.products.monotubes.features', { returnObjects: true }),
     },
     {
       id: 'speciaux',
       name: t('productsPage.products.speciaux.title'),
       image: speciauxImage,
-      features: t('productsPage.products.speciaux.features', { returnObjects: true })
+      features: t('productsPage.products.speciaux.features', { returnObjects: true }),
     },
     {
       id: 'renforcement',
       name: t('productsPage.products.renforcement.title'),
       image: monotubesImage,
-      features: t('productsPage.products.renforcement.features', { returnObjects: true })
+      features: t('productsPage.products.renforcement.features', { returnObjects: true }),
     }
   ];
 
   return (
-    <ProductsPageContainer>
+    <PageContainer>
       <HeroSection>
-        <VideoBackground autoPlay loop muted playsInline>
+        <VideoBackground autoPlay muted loop playsInline>
           <source src={VideoPylone} type="video/mp4" />
         </VideoBackground>
-        <HeroOverlay />
+        <Overlay />
         <HeroContent>
           <h1>{t('productsPage.hero.title')}</h1>
           <p>{t('productsPage.hero.subtitle')}</p>
         </HeroContent>
       </HeroSection>
 
-      <Container>
+      <Section>
         {productCategories.map((product, index) => (
-          <ProductSection key={product.id}>
-            <ProductContent>
-              {index % 2 === 0 ? (
-                <>
-                  <ProductText>
-                    <h3>{product.name}</h3>
-                    <ul>
-                      {product.features.map((feature, i) => (
-                        <li key={i}>{feature}</li>
-                      ))}
-                    </ul>
-                    <ProductButton
+          <ProductBlock key={product.id}>
+            {(index % 2 === 0 || window.innerWidth < 768) ? (
+              <>
+                <ProductText>
+                  <h3>{product.name}</h3>
+                  <ul>
+                    {product.features.map((feat, i) => (
+                      <li key={i}>{feat}</li>
+                    ))}
+                  </ul>
+                  <Link to="/contact">
+                    <CTAButton
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right"></i>
-                    </ProductButton>
-                  </ProductText>
-                  <ProductImageContainer>
-                    <ProductImage image={product.image} />
-                  </ProductImageContainer>
-                </>
-              ) : (
-                <>
-                  <ProductImageContainer>
-                    <ProductImage image={product.image} />
-                  </ProductImageContainer>
-                  <ProductText>
-                    <h3>{product.name}</h3>
-                    <ul>
-                      {product.features.map((feature, i) => (
-                        <li key={i}>{feature}</li>
-                      ))}
-                    </ul>
-                    <ProductButton
+                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right" />
+                    </CTAButton>
+                  </Link>
+                </ProductText>
+                <ProductImage>
+                  <img src={product.image} alt={product.name} />
+                </ProductImage>
+              </>
+            ) : (
+              <>
+                <ProductImage>
+                  <img src={product.image} alt={product.name} />
+                </ProductImage>
+                <ProductText>
+                  <h3>{product.name}</h3>
+                  <ul>
+                    {product.features.map((feat, i) => (
+                      <li key={i}>{feat}</li>
+                    ))}
+                  </ul>
+                  <Link to="/contact">
+                    <CTAButton
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right"></i>
-                    </ProductButton>
-                  </ProductText>
-                </>
-              )}
-            </ProductContent>
-          </ProductSection>
+                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right" />
+                    </CTAButton>
+                  </Link>
+                </ProductText>
+              </>
+            )}
+          </ProductBlock>
         ))}
-      </Container>
-    </ProductsPageContainer>
+      </Section>
+    </PageContainer>
   );
 };
 

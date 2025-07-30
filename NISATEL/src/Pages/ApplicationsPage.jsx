@@ -1,114 +1,303 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-const ApplicationPage = () => {
+import VideoPylone from '../assets/pylone.mp4';
+import autoportantsImage from '../assets/pylones-monotubes-2.jpg';
+import monotubesImage from '../assets/NISATEL-MAINTENANCE.webp';
+import speciauxImage from '../assets/Pylônes-spéciaux.png';
+import renforcementImage from '../assets/Pylones_treillis_autoportants.jpg';
+
+// Styled Components
+const ProductsPageContainer = styled.div`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background: white;
+`;
+
+const HeroSection = styled.section`
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    height: 50vh;
+  }
+`;
+
+const VideoBackground = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+`;
+
+const HeroOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+`;
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+
+  h1 {
+    font-size: 3rem;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    font-size: 1.3rem;
+    margin-top: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+`;
+
+const ProductSection = styled.section`
+  margin-bottom: 60px;
+`;
+
+const ProductContent = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const ProductText = styled.div`
+  flex: 1;
+  min-width: 280px;
+
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    color: #2c3e50;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 50px;
+      height: 3px;
+      background: #f39c12;
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+    }
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #555;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #3498db;
+      font-size: 1.5rem;
+      top: -5px;
+    }
+  }
+`;
+
+const ProductImageContainer = styled.div`
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+  height: 300px;
+  border: 4px solid #3498db;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+
+  &:hover {
+    border-color: #f39c12;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+
+const ProductImage = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${props => props.image});
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+
+  ${ProductImageContainer}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const ProductButton = styled(motion.button)`
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background: #2980b9;
+  }
+
+  i {
+    margin-left: 10px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+// Component
+const PylonesPage = () => {
   const { t } = useTranslation();
 
-  const applications = [
+  const productCategories = [
     {
-      image: "/images/mobile-networks.jpg",
-      title: t("applications.mobileNetworks.title"),
-      description: t("applications.mobileNetworks.description")
+      id: 'autoportants',
+      name: t('productsPage.products.autoportants.title'),
+      image: renforcementImage,
+      features: t('productsPage.products.autoportants.features', { returnObjects: true }),
     },
     {
-      image: "/images/emergency-comms.jpg",
-      title: t("applications.emergency.title"),
-      description: t("applications.emergency.description")
+      id: 'monotubes',
+      name: t('productsPage.products.monotubes.title'),
+      image: autoportantsImage,
+      features: t('productsPage.products.monotubes.features', { returnObjects: true }),
     },
     {
-      image: "/images/transport-networks.jpg",
-      title: t("applications.transport.title"),
-      description: t("applications.transport.description")
+      id: 'speciaux',
+      name: t('productsPage.products.speciaux.title'),
+      image: speciauxImage,
+      features: t('productsPage.products.speciaux.features', { returnObjects: true }),
     },
     {
-      image: "/images/private-comms.jpg",
-      title: t("applications.privateComms.title"),
-      description: t("applications.privateComms.description")
-    },
-    {
-      image: "/images/broadcasting.jpg",
-      title: t("applications.broadcasting.title"),
-      description: t("applications.broadcasting.description")
-    },
-    {
-      image: "/images/measurement.jpg",
-      title: t("applications.measurement.title"),
-      description: t("applications.measurement.description")
+      id: 'renforcement',
+      name: t('productsPage.products.renforcement.title'),
+      image: monotubesImage,
+      features: t('productsPage.products.renforcement.features', { returnObjects: true }),
     }
   ];
 
   return (
-    <div className="min-h-screen">
-      <div className="relative bg-blue-900 overflow-hidden">
-        <div className="absolute inset-0"></div>
+    <ProductsPageContainer>
+      <HeroSection>
+        <VideoBackground autoPlay loop muted playsInline>
+          <source src={VideoPylone} type="video/mp4" />
+        </VideoBackground>
+        <HeroOverlay />
+        <HeroContent>
+          <h1>{t('productsPage.hero.title')}</h1>
+          <p>{t('productsPage.hero.subtitle')}</p>
+        </HeroContent>
+      </HeroSection>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-35 pb-15 text-center">
-          <h1 className="text-white text-3xl  lg:text-5xl font-bold leading-tight">
-            {t("hero.title.part1")} <span className="inline text-orange-400">{t("hero.title.highlight")}</span>
-          </h1>
-
-          <div className="mt-6 inline-block px-6 py-3 rounded-full bg-orange-400 border border-orange-400 text-white text-2xl font-bold shadow-md">
-            {t("hero.experience")}
-          </div>
-        </div>
-      </div>
-
-      {/* Applications Section */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-extrabold text-blue-900 sm:text-4xl">
-            <span>{t("applications.sectionTitle.part1")}</span>
-            <span className=" text-orange-500 mt-2"> {t("applications.sectionTitle.part2")}</span>
-          </h2>
-          <p className="mt-4 max-w-2xl text-xl text-blue-600 mx-auto">
-            {t("applications.sectionDescription")}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {applications.map((app, index) => (
-            <div 
-              key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group"
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  src={app.image}
-                  alt={app.title}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-blue-900 mb-2">{app.title}</h3>
-                <p className="text-gray-600">{app.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Call to action */}
-      <div className="bg-blue-900 text-white">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-10 lg:px-8 text-center">
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            <span className="block">{t("cta.title.part1")}</span>
-            <span className="block text-orange-400 mt-2">{t("cta.title.part2")}</span>
-          </h2>
-          <div className="mt-8 flex justify-center">
-            <div className="inline-flex rounded-md shadow">
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-800 bg-white hover:bg-gray-50"
-              >
-                {t("cta.button")}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Container>
+        {productCategories.map((product, index) => (
+          <ProductSection key={product.id}>
+            <ProductContent>
+              {index % 2 === 0 ? (
+                <>
+                  <ProductText>
+                    <h3>{product.name}</h3>
+                    <ul>
+                      {product.features.map((feature, i) => (
+                        <li key={i}>{feature}</li>
+                      ))}
+                    </ul>
+                    <ProductButton
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right" />
+                    </ProductButton>
+                  </ProductText>
+                  <ProductImageContainer>
+                    <ProductImage image={product.image} />
+                  </ProductImageContainer>
+                </>
+              ) : (
+                <>
+                  <ProductImageContainer>
+                    <ProductImage image={product.image} />
+                  </ProductImageContainer>
+                  <ProductText>
+                    <h3>{product.name}</h3>
+                    <ul>
+                      {product.features.map((feature, i) => (
+                        <li key={i}>{feature}</li>
+                      ))}
+                    </ul>
+                    <ProductButton
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {t('productsPage.ctaButton')} <i className="fas fa-arrow-right" />
+                    </ProductButton>
+                  </ProductText>
+                </>
+              )}
+            </ProductContent>
+          </ProductSection>
+        ))}
+      </Container>
+    </ProductsPageContainer>
   );
 };
 
-export default ApplicationPage;
+export default PylonesPage;

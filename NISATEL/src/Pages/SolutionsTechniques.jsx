@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Container, Section, SectionHeader, Button } from "../components/SharedStyles";
 import { useTranslation } from 'react-i18next';
-
+import { Link } from 'react-router-dom';
 // Images
 import wifiImage from '../assets/wifi-enterprise.png';
 import paratonnerreImage from '../assets/paratonnere.jpg';
@@ -48,7 +48,9 @@ const SolutionsTechniques = () => {
               )}
               
               {index === 0 && (
+                <Link to="/wireless">
                 <Button whileHover={{ scale: 1.05 }}>{solution.button}</Button>
+                </Link>
               )}
             </SolutionContent>
             <SolutionImage bgImage={
