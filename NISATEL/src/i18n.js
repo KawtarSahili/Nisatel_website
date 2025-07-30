@@ -6,20 +6,22 @@ import translationEN from "./locales/en/translation.json";
 import translationFR from "./locales/fr/translation.json";
 
 i18n
-  .use(LanguageDetector) // Détecte la langue automatiquement
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
       en: { translation: translationEN },
       fr: { translation: translationFR },
     },
-    fallbackLng: "fr", 
-    interpolation: {
-      escapeValue: false,
-    },
+    fallbackLng: "fr",
+    supportedLngs: ["en", "fr"], // ✅ Force les seules langues supportées
     detection: {
       order: ["localStorage", "navigator"],
+      lookupLocalStorage: "lang", // ✅ Précise le nom de la clé à lire dans localStorage
       caches: ["localStorage"],
+    },
+    interpolation: {
+      escapeValue: false,
     },
   });
 
