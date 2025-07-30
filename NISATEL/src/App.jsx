@@ -46,8 +46,6 @@ function App() {
             <Route path="/solutions-techniques" element={<SolutionsTechniques />} />
           </Routes>
         </main>
-console.log("Langue détectée :", i18n.language);
-console.log("Langue locale stockée :", localStorage.getItem("lang"));
         <Footer />
       </div>
     </Router>
