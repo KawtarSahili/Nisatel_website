@@ -20,6 +20,14 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 function App() {
   const { i18n } = useTranslation();
 
+  useEffect(() => {
+    AOS.init();
+
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang && i18n.language !== savedLang) {
+      i18n.changeLanguage(savedLang);
+    }
+  }, [i18n]);
  
   return (
     <Router>
