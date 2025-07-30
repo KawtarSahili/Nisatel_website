@@ -5,14 +5,16 @@ import { FaFax } from "react-icons/fa";
 import headerImage from "../assets/Business-phones-entreprise.jpg";
 import Select from 'react-select';
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 export default function ContactPage() {
   const { t } = useTranslation();
+  const [selectedService, setSelectedService] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(t("contact.alertSent"));
-  };
+
+const handleSubmit = () => {
+  alert("✅ Votre message a été envoyé avec succès !");
+};
 
   const options = [
     { value: 'etudes', label: t("contact.services.etudes") },
@@ -54,7 +56,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative">
+      <div className="relative pt-10">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-orange-600/60 z-10" />
         <img 
           src={headerImage} 
@@ -138,7 +140,7 @@ export default function ContactPage() {
               <p className="mt-4 text-gray-600">{t("contact.sendMessageText")}</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form action="https://formsubmit.co/contact@nisatel.ma" method="POST" onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="fullname" className="block text-sm font-medium text-gray-700 mb-1">
@@ -146,7 +148,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
-                    id="fullname"
+                    id="fullname" name="NomComplet"
                     required
                     className="w-full px-4 py-2 border border-stone-300 hover:border-stone-400 rounded-md focus:border-2 focus:border-blue-500 focus:outline-none focus:ring-0 "
                   />
@@ -157,7 +159,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
-                    id="company"
+                    id="company" name="Entreprise"
                     className="w-full px-4 py-2 border border-stone-300 hover:border-stone-400 rounded-md focus:border-2 focus:border-blue-500 focus:outline-none focus:ring-0"
                   />
                 </div>
@@ -170,7 +172,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
-                    id="email"
+                    id="email" name="Email"
                     required
                     className="w-full px-4 py-2 border border-stone-300 hover:border-stone-400 rounded-md focus:border-2 focus:border-blue-500 focus:outline-none focus:ring-0"
                   />
@@ -181,7 +183,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="tel"
-                    id="phone"
+                    id="phone" name="Telephone"
                     className="w-full px-4 py-2 border border-stone-300 hover:border-stone-400 rounded-md focus:border-2 focus:border-blue-500 focus:outline-none focus:ring-0"
                   />
                 </div>
@@ -197,7 +199,10 @@ export default function ContactPage() {
                   placeholder={t("contact.selectService")}
                   className="w-full"
                   classNamePrefix="custom"
+                  onChange={(selectedOption) => setSelectedService(selectedOption.value)}
                 />
+
+                <input type="hidden" name="service" value={selectedService} />
               </div>
 
               <div>
@@ -205,7 +210,7 @@ export default function ContactPage() {
                   {t("contact.yourMessage")} <span className="text-orange-500">*</span>
                 </label>
                 <textarea
-                  id="message"
+                  id="message" name="Message"
                   rows="5"
                   required
                   className="w-full px-4 py-2 border border-stone-300 hover:border-stone-400 rounded-md focus:border-2 focus:border-blue-500 focus:outline-none focus:ring-0"

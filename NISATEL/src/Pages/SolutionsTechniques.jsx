@@ -17,7 +17,7 @@ const SolutionsTechniques = () => {
   return (
     <Section bgColor="#f9f9f9">
       <Container>
-        <SectionHeader>
+        <SectionHeader className="mt-10">
           <h2>{t('technicalSolutions.title')}</h2>
           <p>{t('technicalSolutions.subtitle')}</p>
         </SectionHeader>

@@ -19,10 +19,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   const { i18n } = useTranslation();
-  useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-  }, []);
 
+ 
   return (
     <Router>
       <div className="flex flex-col min-h-screen overflow-hidden App">

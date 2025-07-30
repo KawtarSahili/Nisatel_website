@@ -30,29 +30,28 @@ const chatbotConfig = {
           "Special towers (guyed, foldable)",
           "Reinforcement of existing towers",
         ],
-        keywords: ["tower", "towers", "structure", "structures"]
+        keywords: ["tower", "towers", "structure", "structures", "reinforcement of towers"]
       },
-      signalisation: {
-        title: "Urban Furniture",
+      SolutionsTechniques: {
+        title: "Technical Solutions",
         items: [
-          "Bollards",
-          "Flexible posts",
-          "Delimitation chains",
-          "Extensible barriers",
-          "Traffic cones"
+          "Professional WiFi",
+          "Lightning protection system",
+          "Beaconing system",
+          "Air conditioning",
         ],
-        keywords: ["signage", "urban furniture", "bollard", "barrier"]
+        keywords: ["technical", "wifi", "lightning", "beacon", "air conditioning", "technical solutions"]
       },
-      equipements: {
-        title: "Fiber Optic Equipment",
+      wireless: {
+        title: "Wireless and fiber optic solutions",
         items: [
           "Optical cables",
           "ODF",
           "Optical jumpers and splitters",
           "Connection cabinets",
-          "FO testing equipment"
+          "Fiber optic test equipment"
         ],
-        keywords: ["fiber optic", "fo equipment", "fo material", "optical cable"]
+        keywords: ["fiber optic", "fo equipment", "fo material", "optical cable", "wireless"]
       },
     },
     defaultButtons: [
@@ -60,8 +59,9 @@ const chatbotConfig = {
       { text: "Main menu", value: "menu" },
       { text: "Request a quote", value: "service_quote", icon: <FaQuoteRight /> },
     ],
-    keywords: ["products", "product", "range", "catalog", "what do you sell", "what products"]
+    keywords: ["range", "catalog", "what do you sell", "what products"]
   },
+
   contact: {
     phone: "0537410257",
     email: "contact@nisatel.ma",

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { FaRobot, FaTimes, FaPaperPlane, FaPhone, FaEnvelope, FaMapMarkerAlt, FaQuoteRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import SolutionsTechniques from '../Pages/SolutionsTechniques';
 
 const chatbotConfig = {
   welcomeMessage: "Bonjour! Je suis l'assistant virtuel de NISATEL. Comment puis-je vous aider ?",
@@ -30,21 +31,20 @@ const chatbotConfig = {
           "Pylônes spéciaux (haubanés, rabattables)",
           "Renforcement de pylône existant",
         ],
-        keywords: ["pylône", "pylônes", "structure", "structures"]
+        keywords: ["pylône", "pylônes", "structure", "structures","pylone","renforcement des pylônes","renforcement des pylones"]
       },
-      signalisation: {
-        title: "Mobilier Urbain",
+      SolutionsTechniques: {
+        title: "Solutions Techniques",
         items: [
-          "Potelets",
-          "Poteaux flexibles",
-          "Chaînes de délimitation",
-          "Les barrières extensibles",
-          "Les cônes de signalisation"
+          "Wifi professionnel",
+          "Système paratonnerre",
+          "Système balisage",
+          "Climatisation",
         ],
-        keywords: ["signalisation", "mobilier urbain", "potelet", "barrière"]
+        keywords: ["techniques", "wifi", "paratonnerre", "balisage", "climatisation", "solutions techniques"]
       },
-      equipements: {
-        title: "Matériel Fibre Optique",
+      wireless: {
+        title: "Solutions wireless et fibre optique",
         items: [
           "Câbles optiques",
           "ODF",
@@ -52,7 +52,7 @@ const chatbotConfig = {
           "Baies de raccordement",
           "Matériel pour tests FO"
         ],
-        keywords: ["fibre optique", "matériel fo", "équipement fo", "câble optique"]
+        keywords: ["fibre optique", "matériel fo", "équipement fo", "câble optique","cable","wireless",]
       },
     },
     defaultButtons: [
@@ -66,7 +66,7 @@ const chatbotConfig = {
     phone: "0537410257",
     email: "contact@nisatel.ma",
     address: "06, Résidence Kader, Témara",
-    keywords: ["contact", "contacter", "email", "mail", "téléphone", "numéro", "adresse", "où êtes-vous", "localisation"]
+    keywords: ["contact", "contacter", "email", "mail", "téléphone","telephone", "numéro","num" ,"tel","adresse", "où êtes-vous", "localisation"]
   }
 };
 
@@ -205,7 +205,7 @@ const ChatbotFr = () => {
     }
 
     if (
-      input.includes("numéro") ||input.includes("téléphone") ||input.includes("tel") ||/appel\w*/i.test(input) || input.includes("joindre") || input.includes("contacter")) {
+      input.includes("numéro") ||input.includes("numero") ||input.includes("téléphone")||input.includes("telephone") ||input.includes("tel") ||/appel\w*/i.test(input) || input.includes("joindre") || input.includes("contacter")) {
       simulateTyping(() => {
         addMessage(`Vous pouvez nous joindre au ${chatbotConfig.contact.phone}`, 'bot', {
           buttons: [
