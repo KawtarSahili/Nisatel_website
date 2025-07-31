@@ -13,15 +13,18 @@ i18n
       en: { translation: translationEN },
       fr: { translation: translationFR },
     },
-    fallbackLng: "fr",
-    supportedLngs: ["en", "fr"], // ✅ Force les seules langues supportées
+    fallbackLng: "fr",              // langue par défaut
+    supportedLngs: ["en", "fr"],
     detection: {
       order: ["localStorage", "navigator"],
-      lookupLocalStorage: "lang", // ✅ Précise le nom de la clé à lire dans localStorage
+      lookupLocalStorage: "lang",
       caches: ["localStorage"],
     },
     interpolation: {
       escapeValue: false,
+    },
+    react: {
+      useSuspense: false,
     },
   });
 
